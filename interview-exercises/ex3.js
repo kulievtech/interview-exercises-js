@@ -37,4 +37,3 @@ console.log(isValidCurlyBraces("{"));
 console.log(isValidCurlyBraces("{}}"));
 console.log(isValidCurlyBraces("{}"));
 
-// console.log("{" === "{}");

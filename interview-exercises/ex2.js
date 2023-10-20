@@ -1,4 +1,4 @@
-// Your Create a function, it takes a string. It would consist only digits and letters, both, or one of them. They will in order, it means, you will not mixed ones: X12X
+//  Create a function that takes a string. It would consist of only digits and letters, both, or one of them. They will be in order, it means, you will not mixed ones: X12X
 // Output XXXX1234567
 // 4 letters 7 numbers
 

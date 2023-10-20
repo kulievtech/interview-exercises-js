@@ -1,86 +1,39 @@
-// Valid ["<section>", "</section>", "div", "</div"]
+// Valid ["<section>", "</section>", "<div>", "</div"]
 
 // Not Valid ["<a>", "<div>", "</a>", "</div"]
 
 // write a function, that takes an array of html tags. Return true if they have valid order and snytax.
 
-// const splitOpenTag = (arr) => {
-//     const result = arr.map((tag) => {
-//       return tag.split("<").join("")
-//     })
-//     return result;
-// }
-
-// console.log(splitOpenTag(["<section>", "</section>", "div", "</div"]));
-
-// const splitCloseTag = (arr) => {
-//   const call = splitOpenTag(arr);
-
-//   const result = call.map((tag) => {
-//     return tag.split(">").join("");
-//   })
-//   return result;
-// }
-
-// console.log(splitCloseTag(["<section>", "</section>", "div", "</div"]));
-
-// const splitSlashTag = (arr) => {
-//   const call = splitCloseTag(arr);
-
-//   const result = call.map((tag) => {
-//     return tag.split("/").join("");
-//   })
-//   return result;
-// }
-
-// console.log(splitSlashTag(["<section>", "</section>", "div", "</div"]));
-
-// const isValidTag = (arr) => {
-//   const call = splitSlashTag(arr);
-
-//   for (let i = 0; i < call.length; i++) {
-//     if (call[i] === call[i + 1]) {
-//       return true;
-//     }
-//     return false;
-//   }
-
-// };
-
-// console.log(isValidTag(["<section>", "</section>", "div", "</div"]));
-// console.log(isValidTag(["<a>", "<div>", "</a>", "</div"]));
-
-const splitOpenTag = (arr) => {
-    const result = arr.map((tag) => {
-        return tag.split("<").join("");
-    });
-    return result;
+const isOpeningTag = (tag) => {
+    return tag[1] !== "/";
 };
 
-console.log(splitOpenTag(["<section>", "</section>", "div", "</div"]));
-
-const splitCloseTag = (arr) => {
-    const call = splitOpenTag(arr);
-
-    const result = call.map((tag) => {
-        return tag.split(">").join("");
-    });
-    return result;
+const convertToOpeningTag = (closingTag) => {
+    return closingTag[0] + closingTag.slice(2);
 };
 
-console.log(splitCloseTag(["<section>", "</section>", "div", "</div"]));
+const isHtmlValid = (tags) => {
+    const holder = [];
 
-const isValidTag = (arr) => {
-    const call = splitCloseTag(arr);
+    for (const tag of tags) {
+        if (isOpeningTag(tag)) {
+            holder.push(tag);
+        } else {
+            const lastTag = holder.pop();
+            const openingTag = convertToOpeningTag(tag);
 
-    for (let i = 0; i < call.length; i++) {
-        console.log(call[i]);
+            if (lastTag !== openingTag) {
+                return false;
+            }
+        }
     }
+    return holder.length === 0;
 };
 
-console.log(isValidTag(["<section>", "</section>", "div", "</div"]));
-// console.log(isValidTag(["<a>", "<div>", "</a>", "</div"]));
-
-// const getOpeningTag = closingTag => {
-//   return closingTag.slice(0, 1) + closingTag.slice(2);
-// }
+console.log(isHtmlValid(["<section>", "</section>", "<div>", "</div"]));
+console.log(isHtmlValid(["<a>", "<div>", "</a>", "</div"]));
+console.log(isHtmlValid(["<div>"]));
+console.log(isHtmlValid(["</div>", "<>"]));
+console.log(isHtmlValid(["<div>", "</div>"]));
+console.log(isHtmlValid(["<div>", "</div>", "<div>"]));
+console.log(isHtmlValid(["<div>", "</p>"]));

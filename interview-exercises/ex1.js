@@ -1,24 +1,34 @@
 // Create a function that takes an array of numbers, and target number. Check if two numbers can be added and get the target sum. Do not use nested arrays, includes, indexOf methods. Use objects.
 
-// [1, 4, 5, 7], 8 => false
-// [1,3,7,8,0,4], 7 => true
+// [1, 4, 5, 7], 8 => true
+// [1, 3, 7, 8, 0, 4], 7 => true
 
-const arrayInput1 = [1, 4, 5, 7];
-const numberInput1 = 8;
+const checkSum = (arr, target) => {
+    const obj = {};
 
-const arrayInput2 = [1, 3, 7, 8, 0, 4];
-const numberInput2 = 7;
-
-const checkSum = (arr, num) => {
     for (let i = 0; i < arr.length; i++) {
-        const number = arr[i];
+        const difference = target - arr[i];
 
-        if (number + arr[i + 1] === num) {
+        if (obj[difference]) {
             return true;
         }
+        obj[arr[i]] = true;
     }
     return false;
 };
 
-console.log(checkSum(arrayInput1, numberInput1));
-console.log(checkSum(arrayInput2, numberInput2));
+console.log(checkSum([1, 4, 5, 7], 8)); // true
+
+// obj = {"7": true, "4":true, "3": true, "1": true}
+
+console.log(checkSum([1, 4, 5, 6], 12)); // false
+
+// obj = {"11": true, "8":true, "7": true, "6": true}
+
+console.log(checkSum([1, 3, 7, 8, 0, 4], 7)); // true
+
+// obj = {"6": true, "4":true, "0": true, "-1": true, "7": true, "3": true}
+
+console.log(checkSum([1, 5, 5, 7], 10)); // true
+
+// obj = {"9": true, "5":true, "5": true,     return true right after this}
